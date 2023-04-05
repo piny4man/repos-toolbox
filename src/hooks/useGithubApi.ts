@@ -1,7 +1,7 @@
-import { Octokit } from '@octokit/rest'
+import { Octokit } from 'octokit'
 
 export const octokit = new Octokit({
-  auth: 'your token string here',
+  auth: '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',
   userAgent: 'repos-toolbox v1.0.0'
 })
 
