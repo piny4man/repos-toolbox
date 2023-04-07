@@ -1,0 +1,5 @@
+export type IconName = 'github'
+  | 'eye'
+  | 'fork'
+  | 'issue'
+  | 'star'

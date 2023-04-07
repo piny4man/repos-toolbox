@@ -1,1 +1,1 @@
-export * from './useGithubApi'
+export * from './useRepository'

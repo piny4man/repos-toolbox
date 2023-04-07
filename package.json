@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:icons": "npx @svgr/cli --icon --typescript -d src/components/icons --ignore-existing src/assets/icons"
   },
   "dependencies": {
     "@octokit/rest": "^19.0.7",
