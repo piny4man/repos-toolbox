@@ -14,4 +14,9 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  resolve: {
+    alias: {
+      'node-fetch': 'axios'
+    }
+  }
 })

@@ -1,13 +1,12 @@
-import { Octokit } from 'octokit'
+import { Octokit } from '@octokit/rest'
 
 export const octokit = new Octokit({
-  auth: 'TOKEN',
-  userAgent: 'repos-toolbox v1.0.0'
+  auth: import.meta.env.VITE_GH_TOKEN
 })
 
 export const useGihubApi = () => {
   const getRepository = async (owner: string, repo: string) => {
-    return await octokit.request('GET /repos/{owner}/{repo}/issues', {
+    return await octokit.rest.repos.get({
       owner,
       repo
     })

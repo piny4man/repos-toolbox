@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useGihubApi } from '../../hooks'
+import styles from './styles.module.scss'
 
 const SearchHeader: React.FC = () => {
   const { getRepository } = useGihubApi()
@@ -13,7 +14,7 @@ const SearchHeader: React.FC = () => {
   }
 
   return (
-    <header>
+    <header className={ styles.search__container }>
       <input type="text" value={ owner } onChange={ event => setOwner(event.target.value) } />
       <input type="text" value={ repo } onChange={ event => setRepo(event.target.value) } />
       <button onClick={ handleSearchRepo }>Search</button>

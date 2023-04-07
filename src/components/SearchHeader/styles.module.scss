@@ -1,0 +1,17 @@
+.search__container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+
+  > input {
+    height: 40px;
+
+    &:first-of-type {
+      margin-right: 10px;
+    }
+  }
+}
