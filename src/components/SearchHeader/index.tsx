@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, KeyboardEvent, useMemo } from 'react'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -8,28 +8,37 @@ interface IProps {
 const SearchHeader: FC<IProps> = ({ onSearchRepository }) => {
   const [owner, setOwner] = useState('')
   const [repo, setRepo] = useState('')
+  const isSearchDisabled = useMemo(() => !owner || !repo, [owner, repo])
 
   const handleSearchRepo = async () => {
+    if (isSearchDisabled) return
     onSearchRepository(owner, repo)
     setOwner('')
     setRepo('')
   }
 
+  const handleKeyPress = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (!isSearchDisabled && event.code === 'Enter') {
+      handleSearchRepo()
+      event.currentTarget.blur()
+    }
+  }
+
   return (
-    <header className={ styles.search__container }>
+    <header className={styles.search__container} onKeyDown={handleKeyPress}>
       <input
         type="text"
         placeholder='Owner'
-        value={ owner }
-        onChange={ event => setOwner(event.target.value) }
+        value={owner}
+        onChange={event => setOwner(event.target.value)}
       />
       <input
         type="text"
         placeholder='Repository'
-        value={ repo }
-        onChange={ event => setRepo(event.target.value) }
+        value={repo}
+        onChange={event => setRepo(event.target.value)}
       />
-      <button onClick={ handleSearchRepo }>Search</button>
+      <button onClick={handleSearchRepo} disabled={isSearchDisabled}>Search</button>
     </header>
   )
 }

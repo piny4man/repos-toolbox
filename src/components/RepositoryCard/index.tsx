@@ -10,13 +10,13 @@ interface IProps {
 const RepositoryCard: FC<IProps> = ({ repository }) => {
   return (
     <div className={styles.card__container}>
-      <a href={repository.owner.html_url} target='_blank' rel="noreferrer">
+      <a href={repository.html_url} target='_blank' rel="noreferrer">
         <header>
           <h2>
             {repository.owner.login}/<br/>
             <em>{repository.name}</em>
           </h2>
-          <a href={repository.html_url} target='_blank' rel="noreferrer">
+          <a href={repository.owner.html_url} target='_blank' rel="noreferrer">
             <img src={repository.owner.avatar_url} alt={repository.owner.login} />
           </a>
         </header>
