@@ -1,5 +1,5 @@
 import Icon from './Icon'
-import RepositoryCard from './RepositoryCard'
+import RepoCard from './RepoCard'
 import SearchHeader from './SearchHeader'
 
-export { Icon, RepositoryCard, SearchHeader }
+export { Icon, RepoCard, SearchHeader }

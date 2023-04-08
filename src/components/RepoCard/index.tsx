@@ -7,7 +7,7 @@ interface IProps {
   repository: IRepository
 }
 
-const RepositoryCard: FC<IProps> = ({ repository }) => {
+const RepoCard: FC<IProps> = ({ repository }) => {
   return (
     <div className={styles.card__container}>
       <a href={repository.html_url} target='_blank' rel="noreferrer">
@@ -17,32 +17,32 @@ const RepositoryCard: FC<IProps> = ({ repository }) => {
             <em>{repository.name}</em>
           </h2>
           <a href={repository.owner.html_url} target='_blank' rel="noreferrer">
-            <img src={repository.owner.avatar_url} alt={repository.owner.login} />
+            <img src={repository.owner.avatar_url} alt={repository.owner.login} loading='lazy' />
           </a>
         </header>
         <footer>
           <section>
             {!!repository.open_issues && (
               <div>
-                <Icon icon='issue' />
+                <Icon icon='issue-small' />
                 <span>{repository.open_issues}</span>
               </div>
             )}
             {!!repository.stargazers_count && (
               <div>
-                <Icon icon='star' />
+                <Icon icon='star-small' />
                 <span>{repository.stargazers_count}</span>
               </div>
             )}
             {!!repository.watchers_count && (
               <div>
-                <Icon icon='eye' />
+                <Icon icon='eye-small' />
                 <span>{repository.watchers_count}</span>
               </div>
             )}
             {!!repository.forks_count && (
               <div>
-                <Icon icon='fork' />
+                <Icon icon='fork-small' />
                 <span>{repository.forks_count}</span>
               </div>
             )}
@@ -56,4 +56,4 @@ const RepositoryCard: FC<IProps> = ({ repository }) => {
   )
 }
 
-export default RepositoryCard
+export default RepoCard

@@ -6,6 +6,17 @@
   justify-content: flex-start;
   align-items: stretch;
   color: #1c1c1c;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  transition: all 0.1s ease-in-out;
+  max-width: 380px;
+  width: 380px;
+  margin: 10px;
+
+  &:hover,
+  &:active {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.26);
+  }
 
   > a {
     color: inherit;
@@ -33,7 +44,7 @@
 
       > a {
         > img {
-          max-width: 80px;
+          max-width: 60px;
           height: auto;
         }
       }

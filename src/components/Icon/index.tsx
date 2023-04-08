@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { IconName } from '../../models'
-import { Eye, Fork, Github, Issue, Star } from '../icons'
+import { Eye, EyeSmall, Fork, ForkSmall, Github, Issue, IssueSmall, Star, StarSmall } from '../icons'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -12,14 +12,22 @@ const Icon: FC<IProps> = ({ icon }) => {
     switch (icon) {
       case 'eye':
         return <Eye />
+      case 'eye-small':
+        return <EyeSmall />
       case 'fork':
         return <Fork />
+      case 'fork-small':
+        return <ForkSmall />
       case 'github':
         return <Github />
       case 'issue':
         return <Issue />
+      case 'issue-small':
+        return <IssueSmall />
       case 'star':
         return <Star />
+      case 'star-small':
+        return <StarSmall />
       default:
         return null
     }
