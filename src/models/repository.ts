@@ -24,4 +24,9 @@ export interface IRepository {
   license: string | null
   subscribers_count: number
   open_issues: number
+  languages: IRepositoryLanguages
+}
+
+export interface IRepositoryLanguages {
+  [key: string]: number
 }

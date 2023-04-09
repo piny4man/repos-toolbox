@@ -15,8 +15,16 @@ export const useRepository = () => {
     return await octokit.rest.repos.get({
       owner,
       repo
-    }).then(({ data }) => {
-      setRepoPreview(<IRepository>data)
+    }).then(async ({ data }) => {
+      const {data: languages} = await octokit.rest.repos.listLanguages({
+        owner,
+        repo
+      })
+      const responseRepository = {
+        ...data,
+        languages
+      }
+      setRepoPreview(<IRepository>responseRepository)
     }).catch((err) => {
       console.error(err)
     })
