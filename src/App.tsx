@@ -6,10 +6,28 @@ import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
 
 const App: FC = () => {
-  const { getRepository, repoPreview, toolboxRepos, saveRepoToToolbox } = useRepository()
+  const {
+    getRepository,
+    repoPreview,
+    setRepoPreview,
+    toolboxRepos,
+    saveRepoToToolbox,
+    previewStatus,
+    setPreviewStatus
+  } = useRepository()
 
   const handleSearchRepository = async (owner: string, repo: string) => {
     await getRepository(owner, repo)
+  }
+
+  const handleSaveRepoToToolbox = () => {
+    saveRepoToToolbox()
+    setPreviewStatus('idle')
+  }
+
+  const handleCloseRepoPreview = () => {
+    setRepoPreview(undefined)
+    setPreviewStatus('idle')
   }
 
   return (
@@ -17,11 +35,19 @@ const App: FC = () => {
       <div>
         <img src={logo} className={styles.logo} alt="React logo" />
       </div>
-      <h1>Repos Toolbox</h1>
+      {/* <h1>Repos Toolbox</h1> */}
       <h4>🚧 Application still Work in Progress 🏗️</h4>
       <div className="card">
-        <SearchHeader onSearchRepository={ handleSearchRepository } />
-        <RepoPreview repository={ repoPreview } onSaveRepo={ () => saveRepoToToolbox() } />
+        <SearchHeader
+          status={previewStatus}
+          onSearchRepository={handleSearchRepository}
+          isHidden={!!repoPreview}
+        />
+        <RepoPreview
+          repository={repoPreview }
+          onSaveRepo={handleSaveRepoToToolbox}
+          onCancel={handleCloseRepoPreview}
+        />
       </div>
       <section className={styles.repos__container}>
         <header>

@@ -1,11 +1,15 @@
 import { FC, useState, KeyboardEvent, useMemo } from 'react'
+import { Status } from '../../models'
+import Spinner from '../Spinner'
 import styles from './styles.module.scss'
 
 interface IProps {
+  status: Status
   onSearchRepository: (owner: string, repo: string) => void
+  isHidden?: boolean
 }
 
-const SearchHeader: FC<IProps> = ({ onSearchRepository }) => {
+const SearchHeader: FC<IProps> = ({ status, onSearchRepository, isHidden }) => {
   const [owner, setOwner] = useState('')
   const [repo, setRepo] = useState('')
   const isSearchDisabled = useMemo(() => !owner || !repo, [owner, repo])
@@ -24,6 +28,14 @@ const SearchHeader: FC<IProps> = ({ onSearchRepository }) => {
     }
   }
 
+  if (isHidden) return null
+  if (status === 'loading') {
+    return (
+      <header className={styles.search__container} >
+        <Spinner />
+      </header>
+    )
+  }
   return (
     <header className={styles.search__container} onKeyDown={handleKeyPress}>
       <input

@@ -4,4 +4,12 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &__actions {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+  }
 }
