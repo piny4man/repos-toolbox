@@ -15,11 +15,11 @@ const RepoCard: FC<IProps> = ({ repository }) => {
         <header>
           <h2>
             {repository.owner.login}/<br/>
-            <em>{repository.name}</em>
+            <strong>{repository.name}</strong>
           </h2>
-          <a href={repository.owner.html_url} target='_blank' rel="noreferrer">
+          {/* <a href={repository.owner.html_url} target='_blank' rel="noreferrer"> */}
             <img src={repository.owner.avatar_url} alt={repository.owner.login} loading='lazy' />
-          </a>
+          {/* </a> */}
         </header>
         <footer>
           <section>

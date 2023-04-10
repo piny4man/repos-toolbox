@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { useCallback, useState } from 'react'
-import { IRepository } from '../models'
+import { IRepository, Status } from '../models'
 import { colorCodes } from '../models/color'
 import { useLocalStorageState } from './useLocalStorage'
 
@@ -11,8 +11,10 @@ export const octokit = new Octokit({
 export const useRepository = () => {
   const [repoPreview, setRepoPreview] = useState<IRepository>()
   const [toolboxRepos, setToolboxRepos] = useLocalStorageState<IRepository[]>('toolbox:repositories', [])
+  const [previewStatus, setPreviewStatus] = useState<Status>('idle')
 
   const getRepository = async (owner: string, repo: string) => {
+    setPreviewStatus('loading')
     return await octokit.rest.repos.get({
       owner,
       repo
@@ -26,8 +28,10 @@ export const useRepository = () => {
         languages
       }
       setRepoPreview(<IRepository>responseRepository)
+      setPreviewStatus('succeeded')
     }).catch((err) => {
       console.error(err)
+      setPreviewStatus('failed')
     })
   }
 
@@ -43,9 +47,11 @@ export const useRepository = () => {
 
   return {
     repoPreview,
+    setRepoPreview,
     toolboxRepos,
     setToolboxRepos,
-    setRepoPreview,
+    previewStatus,
+    setPreviewStatus,
     getRepository,
     saveRepoToToolbox,
     getRepoLanguageColorCode

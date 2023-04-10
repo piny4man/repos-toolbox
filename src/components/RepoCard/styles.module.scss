@@ -44,17 +44,16 @@
         margin: 0;
         text-align: left;
         font-weight: normal;
+        font-size: 20px;
 
         > em {
           font-weight: bold;
         }
       }
 
-      > a {
-        > img {
-          max-width: 60px;
-          height: auto;
-        }
+      > img {
+        max-width: 60px;
+        height: auto;
       }
     }
 
@@ -84,6 +83,7 @@
           justify-content: flex-start;
           align-items: center;
           margin-right: 8px;
+          font-size: 16px;
 
           > span:first-of-type {
             margin-right: 4px;
