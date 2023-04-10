@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { IRepository } from '../../models'
 import Icon from '../Icon'
+import LanguagesBadge from './LanguagesBadge'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -51,6 +52,7 @@ const RepoCard: FC<IProps> = ({ repository }) => {
             <Icon icon='github' />
           </section>
         </footer>
+        <LanguagesBadge languages={repository.languages} />
       </a>
     </div>
   )
