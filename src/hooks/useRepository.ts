@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { IRepository } from '../models'
+import { colorCodes } from '../models/color'
 import { useLocalStorageState } from './useLocalStorage'
 
 export const octokit = new Octokit({
@@ -36,12 +37,17 @@ export const useRepository = () => {
     setRepoPreview(undefined)
   }
 
+  const getRepoLanguageColorCode = useCallback((language: string) => {
+    return colorCodes[language] ? colorCodes[language].color : 'grey'
+  }, [])
+
   return {
     repoPreview,
     toolboxRepos,
     setToolboxRepos,
     setRepoPreview,
     getRepository,
-    saveRepoToToolbox
+    saveRepoToToolbox,
+    getRepoLanguageColorCode
   }
 }
