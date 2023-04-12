@@ -1,10 +1,10 @@
 import { FC, useState, KeyboardEvent, useMemo } from 'react'
-import { Status } from '../../models'
+import { LoadingState } from '../../models'
 import Spinner from '../Spinner'
 import styles from './styles.module.scss'
 
 interface IProps {
-  status: Status
+  status: LoadingState
   onSearchRepository: (owner: string, repo: string) => void
   isHidden?: boolean
 }

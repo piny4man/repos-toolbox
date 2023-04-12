@@ -12,8 +12,8 @@ const App: FC = () => {
     setRepoPreview,
     toolboxRepos,
     saveRepoToToolbox,
-    previewStatus,
-    setPreviewStatus
+    previewState,
+    setPreviewState
   } = useRepository()
 
   const handleSearchRepository = async (owner: string, repo: string) => {
@@ -22,12 +22,12 @@ const App: FC = () => {
 
   const handleSaveRepoToToolbox = () => {
     saveRepoToToolbox()
-    setPreviewStatus('idle')
+    setPreviewState('idle')
   }
 
   const handleCloseRepoPreview = () => {
     setRepoPreview(undefined)
-    setPreviewStatus('idle')
+    setPreviewState('idle')
   }
 
   return (
@@ -35,11 +35,11 @@ const App: FC = () => {
       <div>
         <img src={logo} className={styles.logo} alt="React logo" />
       </div>
-      {/* <h1>Repos Toolbox</h1> */}
+      <h1>Repos Toolbox</h1>
       <h4>🚧 Application still Work in Progress 🏗️</h4>
       <div className="card">
         <SearchHeader
-          status={previewStatus}
+          status={previewState}
           onSearchRepository={handleSearchRepository}
           isHidden={!!repoPreview}
         />
