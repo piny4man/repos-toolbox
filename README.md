@@ -5,7 +5,7 @@
 - [x] Final logo
 - [x] Save repository
 - [x] Localhost storage
-- [x] Update repositories on first load
+- [ ] Update repositories on first load
 - [ ] Tags creation and assignation
 - [ ] Add Api and Database
 - [ ] Github app
