@@ -16,3 +16,6 @@
 
 ## Colors
 [Toolbox Color](https://www.color-name.com/toolbox.color)
+
+## Icons
+[Octicons](https://primer.style/design/foundations/icons/octovisuals/)
