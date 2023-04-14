@@ -15,13 +15,12 @@ export interface IRepository {
   private: boolean
   owner: IRepositoryOwner
   html_url: string
-  description: string
+  description: string | null
   fork: boolean
-  language: string
+  language: string | null
   stargazers_count: number
   watchers_count: number
   forks_count: number
-  license: string | null
   subscribers_count: number
   open_issues: number
   languages: IRepositoryLanguages

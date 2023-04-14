@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 import { IRepositoryLanguages } from '../../../models'
-import { useRepository } from '../../../hooks'
+import { useColor } from '../../../hooks'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const LanguagesBadge: FC<IProps> = ({ languages }) => {
-  const { getRepoLanguageColorCode } = useRepository()
+  const { getRepoLanguageColorCode } = useColor()
 
   const languagesTotal = useMemo(() => {
     return Object.values(languages).reduce((acc, curr) => acc + curr, 0)
