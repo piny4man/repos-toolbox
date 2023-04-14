@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import logo from './assets/logo.svg'
-import { RepoCard, SearchHeader } from './components'
+import { RepoCard, SearchHeader, Spinner } from './components'
 import { useRepository } from './hooks'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
@@ -13,7 +13,8 @@ const App: FC = () => {
     toolboxRepos,
     saveRepoToToolbox,
     previewState,
-    setPreviewState
+    setPreviewState,
+    toolboxListState
   } = useRepository()
 
   const handleSearchRepository = async (owner: string, repo: string) => {
@@ -54,7 +55,10 @@ const App: FC = () => {
           <h1>My saved repositories</h1>
         </header>
         <div className="repos__list">
-          {toolboxRepos.map((repo) => (<RepoCard key={repo.id} repository={ repo } />))}
+          {toolboxListState === 'loading' && <Spinner /> }
+          {toolboxListState === 'succeeded' &&
+            toolboxRepos.map((repo) => (<RepoCard key={repo.id} repository={ repo } />))
+          }
         </div>
       </section>
     </main>

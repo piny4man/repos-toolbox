@@ -12,6 +12,7 @@
 - [ ] Change UI
 - [ ] Framer animations
 - [ ] More repository vendors (Gitlab, bitbucket ...)
+- [ ] Repo card dropshadow same color as owner logo color
 
 
 ## Colors
