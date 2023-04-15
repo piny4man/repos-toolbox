@@ -1,9 +1,10 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import logo from './assets/logo.svg'
-import { RepoCard, SearchHeader, Spinner } from './components'
-import { useRepositories } from './hooks'
+import { RepoCard, SearchHeader, Select, Spinner } from './components'
+import { useRepositories, useTags } from './hooks'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
+import { IOption } from './models'
 
 const App: FC = () => {
   const {
@@ -16,6 +17,8 @@ const App: FC = () => {
     setPreviewState,
     toolboxListState
   } = useRepositories()
+  const {tags} = useTags()
+  const [tagFilter, setTagFilter] = useState<IOption>()
 
   const handleSearchRepository = async (owner: string, repo: string) => {
     await getRepository(owner, repo)
@@ -30,6 +33,8 @@ const App: FC = () => {
     setRepoPreview(undefined)
     setPreviewState('idle')
   }
+
+  const tagOptions: IOption[] = tags.map(tag => ({ id: tag, label: tag }))
 
   return (
     <main className={styles.app}>
@@ -53,11 +58,25 @@ const App: FC = () => {
       <section className={styles.repos__container}>
         <header>
           <h1>My saved repositories</h1>
+          <div className="filters">
+            <Select
+              value={tagFilter}
+              placeholder="Filter by tag"
+              labelProp="label"
+              options={tagOptions}
+              onChange={setTagFilter}
+              onClearValue={() => setTagFilter(undefined)}
+            />
+          </div>
         </header>
         <div className="repos__list">
           {toolboxListState === 'loading' && <Spinner /> }
           {toolboxListState === 'succeeded' &&
-            toolboxRepos.map((repo) => (<RepoCard key={repo.id} repository={ repo } />))
+            toolboxRepos
+              .filter(repo => tagFilter ? repo.tags.includes(tagFilter.id) : true)
+              .map(
+                (repo) => (<RepoCard key={repo.id} repository={ repo } />)
+              )
           }
         </div>
       </section>

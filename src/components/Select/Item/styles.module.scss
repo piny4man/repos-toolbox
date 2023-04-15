@@ -1,0 +1,33 @@
+.item {
+  display: flex;
+  flex-shrink: 0;
+  font-size: 16px;
+  background: white;
+  color: black;
+  height: 49px;
+  padding: 0 16px;
+  overflow: hidden;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background: #746CC01A;
+    color: #746CC0;
+  }
+
+  &.selected {
+    background: #746CC033;
+    color: #746CC0;
+  }
+
+  &.disabled {
+    background: white;
+    color: gray;
+  }
+
+  .label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 1;
+  }
+}

@@ -1,6 +1,20 @@
-import { FC } from 'react'
+import { FC, SyntheticEvent } from 'react'
 import { IconName } from '../../models'
-import { Close, Eye, EyeSmall, Fork, ForkSmall, Github, Issue, IssueSmall, Star, StarSmall } from '../icons'
+import {
+  Check,
+  ChevronDown,
+  ChevronUp,
+  Close,
+  Eye,
+  EyeSmall,
+  Fork,
+  ForkSmall,
+  Github,
+  Issue,
+  IssueSmall,
+  Star,
+  StarSmall
+} from '../icons'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -9,7 +23,8 @@ interface IProps {
 }
 
 const Icon: FC<IProps> = ({ icon, onClick }) => {
-  const handleIconClick = () => {
+  const handleIconClick = (event: SyntheticEvent) => {
+    event.stopPropagation()
     if (onClick && typeof onClick === 'function') onClick()
   }
 
@@ -35,6 +50,12 @@ const Icon: FC<IProps> = ({ icon, onClick }) => {
         return <StarSmall />
       case 'close':
         return <Close />
+      case 'down':
+        return <ChevronDown />
+      case 'up':
+        return <ChevronUp />
+      case 'check':
+        return <Check />
       default:
         return null
     }
