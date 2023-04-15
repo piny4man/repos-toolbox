@@ -65,6 +65,7 @@
       align-items: center;
       font-size: 20px;
       color: #1c1c1c;
+      margin-top: auto;
 
       > section {
         display: flex;
@@ -86,9 +87,14 @@
           margin-right: 8px;
           font-size: 16px;
 
-          > span:first-of-type {
-            margin-right: 4px;
-            color: #868fa9;
+          > span {
+            &:first-of-type {
+              margin-right: 4px;
+              color: #868fa9;
+            }
+            &:last-of-type {
+              font-size: 14px;
+            }
           }
         }
       }

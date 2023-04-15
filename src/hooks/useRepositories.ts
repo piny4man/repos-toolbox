@@ -7,7 +7,7 @@ export const octokit = new Octokit({
   auth: import.meta.env.VITE_GH_TOKEN
 })
 
-export const useRepository = () => {
+export const useRepositories = () => {
   const [repoPreview, setRepoPreview] = useState<IRepository>()
   const [toolboxRepos, setToolboxRepos] = useLocalStorageState<IRepository[]>('toolbox:repositories', [])
   const [previewState, setPreviewState] = useState<LoadingState>('idle')

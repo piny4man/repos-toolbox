@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const LanguagesBadge: FC<IProps> = ({ languages }) => {
-  const { getRepoLanguageColorCode } = useColor()
+  const {getRepoLanguageColorCode} = useColor()
 
   const languagesTotal = useMemo(() => {
     return Object.values(languages).reduce((acc, curr) => acc + curr, 0)
