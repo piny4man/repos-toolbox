@@ -1,3 +1,4 @@
 export * from './useColor'
 export * from './useLocalStorage'
-export * from './useRepository'
+export * from './useRepositories'
+export * from './useTags'

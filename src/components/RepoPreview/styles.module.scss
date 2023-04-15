@@ -1,15 +1,34 @@
 .repo__preview {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  cursor: pointer;
 
   &__actions {
-    margin-left: 20px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
+
+    section[class*="autocomplete"] {
+      margin-bottom: auto;
+    }
+
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+
+      button {
+        flex: 1;
+
+        &:first-of-type {
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }

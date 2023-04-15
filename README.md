@@ -1,12 +1,14 @@
 # Repos Toolbox [![Build](https://github.com/piny4man/repos-toolbox/actions/workflows/pull-request.yml/badge.svg)](https://github.com/piny4man/repos-toolbox/actions/workflows/pull-request.yml)
 
-# Roadmap
+## Roadmap
 - [x] Get repo technology color(s)
 - [x] Final logo
 - [x] Save repository
 - [x] Localhost storage
-- [ ] Update repositories on first load
-- [ ] Tags creation and assignation
+- [x] Update repositories on first load
+- [x] Tags creation and assignation
+- [ ] Tag repo filtering
+- [ ] Edit current repo tags
 - [ ] Add Api and Database
 - [ ] Github app
 - [ ] Change UI

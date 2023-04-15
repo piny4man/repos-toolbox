@@ -24,6 +24,7 @@ export interface IRepository {
   subscribers_count: number
   open_issues: number
   languages: IRepositoryLanguages
+  tags: string[]
 }
 
 export interface IRepositoryLanguages {

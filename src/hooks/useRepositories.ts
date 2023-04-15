@@ -7,7 +7,7 @@ export const octokit = new Octokit({
   auth: import.meta.env.VITE_GH_TOKEN
 })
 
-export const useRepository = () => {
+export const useRepositories = () => {
   const [repoPreview, setRepoPreview] = useState<IRepository>()
   const [toolboxRepos, setToolboxRepos] = useLocalStorageState<IRepository[]>('toolbox:repositories', [])
   const [previewState, setPreviewState] = useState<LoadingState>('idle')
@@ -26,6 +26,7 @@ export const useRepository = () => {
       })
       const responseRepository = {
         ...data,
+        tags: [],
         languages
       }
       setRepoPreview(<IRepository>responseRepository)
@@ -36,9 +37,9 @@ export const useRepository = () => {
     })
   }
 
-  const saveRepoToToolbox = () => {
+  const saveRepoToToolbox = (tags: string[]) => {
     if (!repoPreview) return
-    setToolboxRepos([...toolboxRepos, repoPreview])
+    setToolboxRepos([...toolboxRepos, {...repoPreview, tags}])
     setRepoPreview(undefined)
   }
 
@@ -55,6 +56,7 @@ export const useRepository = () => {
         })
         return {
           ...data,
+          tags: repo.tags,
           languages
         }
       })

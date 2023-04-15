@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import logo from './assets/logo.svg'
 import { RepoCard, SearchHeader, Spinner } from './components'
-import { useRepository } from './hooks'
+import { useRepositories } from './hooks'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
 
@@ -15,14 +15,14 @@ const App: FC = () => {
     previewState,
     setPreviewState,
     toolboxListState
-  } = useRepository()
+  } = useRepositories()
 
   const handleSearchRepository = async (owner: string, repo: string) => {
     await getRepository(owner, repo)
   }
 
-  const handleSaveRepoToToolbox = () => {
-    saveRepoToToolbox()
+  const handleSaveRepoToToolbox = (tags: string[]) => {
+    saveRepoToToolbox(tags)
     setPreviewState('idle')
   }
 

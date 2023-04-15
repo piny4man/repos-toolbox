@@ -1,3 +1,4 @@
+export { default as Close } from './Close'
 export { default as EyeSmall } from './EyeSmall'
 export { default as Eye } from './Eye'
 export { default as ForkSmall } from './ForkSmall'
