@@ -7,16 +7,27 @@ import styles from './styles.module.scss'
 
 interface IProps {
   repository?: IRepository
-  onSaveRepo: () => void
+  onSaveRepo: (tags: string[]) => void
   onCancel: () => void
 }
 
 const RepoPreview: FC<IProps> = ({ repository, onSaveRepo, onCancel }) => {
-  const {tags} = useTags()
+  const {tags, setTags} = useTags()
   const [repoTags, setRepoTags] = useState<string[]>([])
 
   const handleAddRepoTag = (tag: string) => {
     setRepoTags(currentTags => [...currentTags, tag])
+  }
+
+  const handleRemoveRepoTag = (tag: string) => {
+    setRepoTags(currentTags => currentTags.filter(t => t !== tag))
+  }
+
+  const handleSaveRepo = () => {
+    const newTags = repoTags.filter(tag => !tags.includes(tag))
+    setTags(currentTags => [...currentTags, ...newTags])
+    onSaveRepo(repoTags)
+    setRepoTags([])
   }
 
   if (!repository) return null
@@ -30,9 +41,10 @@ const RepoPreview: FC<IProps> = ({ repository, onSaveRepo, onCancel }) => {
           label='Tags'
           placeholder='New tag'
           onOptionClick={handleAddRepoTag}
+          onRemoveOption={handleRemoveRepoTag}
         />
         <footer>
-          <button onClick={onSaveRepo} >Save</button>
+          <button onClick={handleSaveRepo} >Save</button>
           <button className="cancel" onClick={onCancel}>Back</button>
         </footer>
       </div>

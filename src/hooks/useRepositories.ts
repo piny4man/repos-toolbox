@@ -26,6 +26,7 @@ export const useRepositories = () => {
       })
       const responseRepository = {
         ...data,
+        tags: [],
         languages
       }
       setRepoPreview(<IRepository>responseRepository)
@@ -36,9 +37,9 @@ export const useRepositories = () => {
     })
   }
 
-  const saveRepoToToolbox = () => {
+  const saveRepoToToolbox = (tags: string[]) => {
     if (!repoPreview) return
-    setToolboxRepos([...toolboxRepos, repoPreview])
+    setToolboxRepos([...toolboxRepos, {...repoPreview, tags}])
     setRepoPreview(undefined)
   }
 
@@ -55,6 +56,7 @@ export const useRepositories = () => {
         })
         return {
           ...data,
+          tags: repo.tags,
           languages
         }
       })

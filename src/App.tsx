@@ -21,8 +21,8 @@ const App: FC = () => {
     await getRepository(owner, repo)
   }
 
-  const handleSaveRepoToToolbox = () => {
-    saveRepoToToolbox()
+  const handleSaveRepoToToolbox = (tags: string[]) => {
+    saveRepoToToolbox(tags)
     setPreviewState('idle')
   }
 

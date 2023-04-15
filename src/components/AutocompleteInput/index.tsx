@@ -1,4 +1,5 @@
 import { FC, SyntheticEvent, useRef, useState } from 'react'
+import Icon from '../Icon'
 import styles from './styles.module.scss'
 
 interface IProps {
@@ -7,9 +8,12 @@ interface IProps {
   label: string
   placeholder?: string
   onOptionClick: (tag: string) => void
+  onRemoveOption: (tag: string) => void
 }
 
-const AutocompleteInput: FC<IProps> = ({ values, autocompleteOptions, label, placeholder, onOptionClick }) => {
+const AutocompleteInput: FC<IProps> = ({
+  values, autocompleteOptions, label, placeholder, onOptionClick, onRemoveOption
+}) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputValue, setInputValue] = useState<string>('')
 
@@ -45,7 +49,11 @@ const AutocompleteInput: FC<IProps> = ({ values, autocompleteOptions, label, pla
           onChange={handleInputChange}
         />
       </div>
-      <p>{values.map(tag => <span key={tag}>{tag}</span>)}</p>
+      <p className={styles.values}>
+        {values.map(v =>
+          <span key={v}>{v}<Icon icon='close' onClick={() => onRemoveOption(v)} /></span>
+        )}
+      </p>
       {inputValue && (
         <ul className={styles.autocomplete__list}>
           {!autocompleteOptions.includes(inputValue) && (
