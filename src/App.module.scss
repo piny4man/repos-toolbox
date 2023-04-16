@@ -25,7 +25,21 @@
 
   > header {
     width: 100%;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    > div {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+
+      > section {
+        margin-right: 8px;
+      }
+    }
   }
 
   > div {

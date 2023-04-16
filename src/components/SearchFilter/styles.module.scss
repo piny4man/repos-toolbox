@@ -1,0 +1,30 @@
+.search__filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40px;
+  background: #2b2a33;
+  border-radius: 4px;
+  border: 1px solid gray;
+  color: white;
+  padding: 0px 8px 0px 12px;
+  box-sizing: border-box;
+
+  > input {
+    flex: 1;
+    color: currentColor;
+    background: transparent;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: ghostwhite;
+    }
+  }
+
+  > [class*="icon"] {
+    margin-left: 8px;
+    fill: currentColor;
+  }
+}

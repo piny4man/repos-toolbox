@@ -1,0 +1,41 @@
+.item {
+  display: flex;
+  flex-shrink: 0;
+  font-size: 14px;
+  background: transparent;
+  color: white;
+  height: 49px;
+  padding: 0 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  > [class*="icon"] {
+    color: currentColor;
+    fill: currentColor;
+  }
+
+  &:hover {
+    background: #746CC01A;
+    color: #8d92f6;;
+  }
+
+  &.selected {
+    background: #746CC033;
+    color: #8d92f6;
+  }
+
+  &.disabled {
+    background: transparent;
+    color: gray;
+  }
+
+  .label {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    flex: 1;
+  }
+}

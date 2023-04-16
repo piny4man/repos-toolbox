@@ -7,7 +7,7 @@
 - [x] Localhost storage
 - [x] Update repositories on first load
 - [x] Tags creation and assignation
-- [ ] Tag repo filtering
+- [x] Tag repo filtering
 - [ ] Edit current repo tags
 - [ ] Add Api and Database
 - [ ] Github app
