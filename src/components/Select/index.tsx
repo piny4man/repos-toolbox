@@ -70,9 +70,16 @@ const Select: FC<IProps> = ({
       onClick={() => setIsOpen(!isDisabledOrEmpty && !isOpen)}
       ref={ref}
     >
-      <input className="value" placeholder={placeholder} readOnly value={value ? value[labelProp] : ''} />
+      <input
+        className="value"
+        placeholder={placeholder}
+        readOnly
+        value={value ? value[labelProp] : ''}
+        title={value ? value[labelProp] : ''}
+        onClick={() => setIsOpen(!isDisabledOrEmpty && !isOpen)}
+      />
       {value && <Icon icon="close" onClick={onClearValue} />}
-      <Icon icon={isOpen && !isDisabledOrEmpty ? 'up' : 'down'} onClick={ handleIconClick }/>
+      <Icon icon={isOpen && !isDisabledOrEmpty ? 'up' : 'down'} onClick={handleIconClick}/>
       {isOpen && !isDisabledOrEmpty && (
         <section className={styles.dropdown}>{items}</section>
       )}

@@ -12,6 +12,7 @@ import {
   Github,
   Issue,
   IssueSmall,
+  Search,
   Star,
   StarSmall
 } from '../icons'
@@ -56,6 +57,8 @@ const Icon: FC<IProps> = ({ icon, onClick }) => {
         return <ChevronUp />
       case 'check':
         return <Check />
+      case 'search':
+        return <Search />
       default:
         return null
     }

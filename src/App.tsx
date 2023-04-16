@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import logo from './assets/logo.svg'
-import { RepoCard, SearchHeader, Select, Spinner } from './components'
+import { RepoCard, SearchFilter, SearchHeader, Select, Spinner } from './components'
 import { useRepositories, useTags } from './hooks'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
@@ -19,6 +19,7 @@ const App: FC = () => {
   } = useRepositories()
   const {tags} = useTags()
   const [tagFilter, setTagFilter] = useState<IOption>()
+  const [textFilter, setTextFilter] = useState('')
 
   const handleSearchRepository = async (owner: string, repo: string) => {
     await getRepository(owner, repo)
@@ -57,8 +58,9 @@ const App: FC = () => {
       </div>
       <section className={styles.repos__container}>
         <header>
-          <h1>My saved repositories</h1>
+          <h2>My saved repositories</h2>
           <div className="filters">
+            <SearchFilter query={textFilter} onQueryChange={setTextFilter} />
             <Select
               value={tagFilter}
               placeholder="Filter by tag"
@@ -74,8 +76,14 @@ const App: FC = () => {
           {toolboxListState === 'succeeded' &&
             toolboxRepos
               .filter(repo => tagFilter ? repo.tags.includes(tagFilter.id) : true)
+              .filter(repo => {
+                return textFilter
+                  ? repo.name.toLowerCase().includes(textFilter.toLowerCase())
+                    || repo.owner.login.toLowerCase().includes(textFilter.toLowerCase())
+                  : true
+              })
               .map(
-                (repo) => (<RepoCard key={repo.id} repository={ repo } />)
+                (repo) => <RepoCard key={repo.id} repository={repo} />
               )
           }
         </div>

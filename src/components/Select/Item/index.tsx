@@ -14,6 +14,7 @@ const Item: FC<PropsWithChildren<IProps>> = ({ isHidden, children, onClick, isSe
     <li
       className={`${styles.item}${ isSelected ? ' selected' : '' }`}
       onClick={onClick}
+      title={children as string}
     >
       <span className="label">{children}</span>
       {isSelected && <Icon icon="check" />}
