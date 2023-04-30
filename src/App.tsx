@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import logo from './assets/logo.svg'
-import { RepoCard, SearchFilter, SearchHeader, Select, Spinner } from './components'
+import { RepoCard, SearchFilter, SearchHeader, Select, Spinner, Suggestions } from './components'
 import { useRepositories, useTags } from './hooks'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
@@ -8,7 +8,10 @@ import { IOption } from './models'
 
 const App: FC = () => {
   const {
-    getRepository,
+    // getRepository,
+    searchRepository,
+    repoSuggestions,
+    setRepoSuggestions,
     repoPreview,
     setRepoPreview,
     toolboxRepos,
@@ -21,8 +24,8 @@ const App: FC = () => {
   const [tagFilter, setTagFilter] = useState<IOption>()
   const [textFilter, setTextFilter] = useState('')
 
-  const handleSearchRepository = async (owner: string, repo: string) => {
-    await getRepository(owner, repo)
+  const handleSearchRepository = async (repo: string) => {
+    await searchRepository(repo)
   }
 
   const handleSaveRepoToToolbox = (tags: string[]) => {
@@ -50,8 +53,9 @@ const App: FC = () => {
           onSearchRepository={handleSearchRepository}
           isHidden={!!repoPreview}
         />
+        <Suggestions suggestions={repoSuggestions} isHidden={!!repoPreview || !repoSuggestions.length} />
         <RepoPreview
-          repository={repoPreview }
+          repository={repoPreview}
           onSaveRepo={handleSaveRepoToToolbox}
           onCancel={handleCloseRepoPreview}
         />
@@ -79,7 +83,7 @@ const App: FC = () => {
               .filter(repo => {
                 return textFilter
                   ? repo.name.toLowerCase().includes(textFilter.toLowerCase())
-                    || repo.owner.login.toLowerCase().includes(textFilter.toLowerCase())
+                    || repo.owner.login?.toLowerCase().includes(textFilter.toLowerCase())
                   : true
               })
               .map(

@@ -1,5 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { useCallback, useEffect, useState } from 'react'
+import axios from 'axios'
 import { IRepository, LoadingState } from '../models'
 import { useLocalStorageState } from './useLocalStorage'
 
@@ -8,11 +9,29 @@ export const octokit = new Octokit({
 })
 
 export const useRepositories = () => {
+  const [repoSuggestions, setRepoSuggestions] = useState<IRepository[]>([])
   const [repoPreview, setRepoPreview] = useState<IRepository>()
   const [toolboxRepos, setToolboxRepos] = useLocalStorageState<IRepository[]>('toolbox:repositories', [])
   const [previewState, setPreviewState] = useState<LoadingState>('idle')
   const [toolboxListState, setToolboxListState] = useState<LoadingState>('idle')
   const [reposAreInitialized, setReposAreInitialized] = useState(false)
+
+  const searchRepository = async (q: string) => {
+    setPreviewState('loading')
+    return await axios.get<any>(`${ import.meta.env.VITE_API_URL }/search?repo=${ q }`).then(async ({ data }) => {
+      setPreviewState('succeeded')
+      const suggestedRepositories: IRepository[] = data.items.map((repo: any) => ({
+        ...repo,
+        subscribers_count: 0,
+        languages: {},
+        tags: []
+      }) ) ?? []
+      setRepoSuggestions(suggestedRepositories)
+    }).catch((err) => {
+      console.error(err)
+      setPreviewState('failed')
+    })
+  }
 
   const getRepository = async (owner: string, repo: string) => {
     setPreviewState('loading')
@@ -47,11 +66,11 @@ export const useRepositories = () => {
     setToolboxListState('loading')
     const updatedRepos: IRepository[] = await Promise.all(toolboxRepos.map(async (repo) => {
       return await octokit.rest.repos.get({
-        owner: repo.owner.login,
+        owner: repo.owner?.login ?? '',
         repo: repo.name
       }).then(async ({ data }) => {
         const {data: languages} = await octokit.rest.repos.listLanguages({
-          owner: repo.owner.login,
+          owner: repo.owner?.login ?? '',
           repo: repo.name
         })
         return {
@@ -74,6 +93,8 @@ export const useRepositories = () => {
   }, [reposAreInitialized, toolboxRepos, updateCurrentToolboxRepos])
 
   return {
+    repoSuggestions,
+    setRepoSuggestions,
     repoPreview,
     setRepoPreview,
     toolboxRepos,
@@ -82,6 +103,7 @@ export const useRepositories = () => {
     setPreviewState,
     toolboxListState,
     setToolboxListState,
+    searchRepository,
     getRepository,
     saveRepoToToolbox
   }

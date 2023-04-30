@@ -1,5 +1,14 @@
 export interface IRepositoryOwner {
-  login: string
+  login?: string | null
+  id: number
+  node_id: string
+  avatar_url: string
+  url: string
+  html_url: string
+}
+
+export interface IRepositorySuggestionOwner {
+  login?: string | null
   id: number
   node_id: string
   avatar_url: string
@@ -25,6 +34,12 @@ export interface IRepository {
   open_issues: number
   languages: IRepositoryLanguages
   tags: string[]
+}
+
+export interface IRepositorySuggestion {
+  id: number
+  name: string
+  owner: IRepositorySuggestionOwner | null
 }
 
 export interface IRepositoryLanguages {
