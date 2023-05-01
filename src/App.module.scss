@@ -9,6 +9,14 @@
   padding: 40px;
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
 .logo {
   max-height: 100px;
   padding: 0;
@@ -18,6 +26,10 @@
   &:hover {
     filter: drop-shadow(0 0 2em #746CC0aa);
   }
+}
+
+.search__container {
+  width: 100%;
 }
 
 .repos__container {
