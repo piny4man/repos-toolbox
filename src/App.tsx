@@ -1,4 +1,6 @@
 import { FC, useState } from 'react'
+// eslint-disable-next-line import/no-unresolved
+import { Analytics } from '@vercel/analytics/react'
 import logo from './assets/logo.svg'
 import { RepoCard, SearchFilter, SearchHeader, Select, Spinner, Suggestions } from './components'
 import { useRepositories, useTags } from './hooks'
@@ -41,58 +43,61 @@ const App: FC = () => {
   const tagOptions: IOption[] = tags.map(tag => ({ id: tag, label: tag }))
 
   return (
-    <main className={styles.app}>
-      <div>
-        <img src={logo} className={styles.logo} alt="React logo" />
-      </div>
-      <h1>Repos Toolbox</h1>
-      <h4>🚧 Application still Work in Progress 🏗️</h4>
-      <div className="card">
-        <SearchHeader
-          status={previewState}
-          onSearchRepository={handleSearchRepository}
-          isHidden={!!repoPreview}
-        />
-        <Suggestions suggestions={repoSuggestions} isHidden={!!repoPreview || !repoSuggestions.length} />
-        <RepoPreview
-          repository={repoPreview}
-          onSaveRepo={handleSaveRepoToToolbox}
-          onCancel={handleCloseRepoPreview}
-        />
-      </div>
-      <section className={styles.repos__container}>
-        <header>
-          <h2>My saved repositories</h2>
-          <div className="filters">
-            <SearchFilter query={textFilter} onQueryChange={setTextFilter} />
-            <Select
-              value={tagFilter}
-              placeholder="Filter by tag"
-              labelProp="label"
-              options={tagOptions}
-              onChange={setTagFilter}
-              onClearValue={() => setTagFilter(undefined)}
-            />
-          </div>
-        </header>
-        <div className="repos__list">
-          {toolboxListState === 'loading' && <Spinner /> }
-          {toolboxListState === 'succeeded' &&
-            toolboxRepos
-              .filter(repo => tagFilter ? repo.tags.includes(tagFilter.id) : true)
-              .filter(repo => {
-                return textFilter
-                  ? repo.name.toLowerCase().includes(textFilter.toLowerCase())
-                    || repo.owner.login?.toLowerCase().includes(textFilter.toLowerCase())
-                  : true
-              })
-              .map(
-                (repo) => <RepoCard key={repo.id} repository={repo} />
-              )
-          }
+    <>
+      <main className={styles.app}>
+        <div>
+          <img src={logo} className={styles.logo} alt="React logo" />
         </div>
-      </section>
-    </main>
+        <h1>Repos Toolbox</h1>
+        <h4>🚧 Application still Work in Progress 🏗️</h4>
+        <div className="card">
+          <SearchHeader
+            status={previewState}
+            onSearchRepository={handleSearchRepository}
+            isHidden={!!repoPreview}
+          />
+          <Suggestions suggestions={repoSuggestions} isHidden={!!repoPreview || !repoSuggestions.length} />
+          <RepoPreview
+            repository={repoPreview}
+            onSaveRepo={handleSaveRepoToToolbox}
+            onCancel={handleCloseRepoPreview}
+          />
+        </div>
+        <section className={styles.repos__container}>
+          <header>
+            <h2>My saved repositories</h2>
+            <div className="filters">
+              <SearchFilter query={textFilter} onQueryChange={setTextFilter} />
+              <Select
+                value={tagFilter}
+                placeholder="Filter by tag"
+                labelProp="label"
+                options={tagOptions}
+                onChange={setTagFilter}
+                onClearValue={() => setTagFilter(undefined)}
+              />
+            </div>
+          </header>
+          <div className="repos__list">
+            {toolboxListState === 'loading' && <Spinner /> }
+            {toolboxListState === 'succeeded' &&
+              toolboxRepos
+                .filter(repo => tagFilter ? repo.tags.includes(tagFilter.id) : true)
+                .filter(repo => {
+                  return textFilter
+                    ? repo.name.toLowerCase().includes(textFilter.toLowerCase())
+                      || repo.owner.login?.toLowerCase().includes(textFilter.toLowerCase())
+                    : true
+                })
+                .map(
+                  (repo) => <RepoCard key={repo.id} repository={repo} />
+                )
+            }
+          </div>
+        </section>
+      </main>
+      <Analytics />
+    </>
   )
 }
 
