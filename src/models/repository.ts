@@ -45,3 +45,8 @@ export interface IRepositorySuggestion {
 export interface IRepositoryLanguages {
   [key: string]: number
 }
+
+export interface IRepositoryResponse {
+  repo: IRepository
+  languages: IRepositoryLanguages
+}

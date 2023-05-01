@@ -1,12 +1,7 @@
-import { Octokit } from '@octokit/rest'
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { IRepository, LoadingState } from '../models'
+import { IRepository, IRepositoryResponse, LoadingState } from '../models'
 import { useLocalStorageState } from './useLocalStorage'
-
-export const octokit = new Octokit({
-  auth: import.meta.env.VITE_GH_TOKEN
-})
 
 export const useRepositories = () => {
   const [repoSuggestions, setRepoSuggestions] = useState<IRepository[]>([])
@@ -18,7 +13,14 @@ export const useRepositories = () => {
 
   const searchRepository = async (q: string) => {
     setPreviewState('loading')
-    return await axios.get<any>(`${ import.meta.env.VITE_API_URL }/search?repo=${ q }`).then(async ({ data }) => {
+    return await axios.get<any>(
+      `${ import.meta.env.VITE_API_URL }/search`,
+      {
+        params: {
+          repo: q
+        }
+      }
+    ).then(async ({ data }) => {
       setPreviewState('succeeded')
       const suggestedRepositories: IRepository[] = data.items.map((repo: any) => ({
         ...repo,
@@ -33,26 +35,31 @@ export const useRepositories = () => {
     })
   }
 
-  const getRepository = async (owner: string, repo: string) => {
+  const getRepository = async (owner: string, repo: string, tags?: string[]): Promise<IRepository> => {
     setPreviewState('loading')
-    return await octokit.rest.repos.get({
-      owner,
-      repo
-    }).then(async ({ data }) => {
-      const {data: languages} = await octokit.rest.repos.listLanguages({
-        owner,
-        repo
-      })
-      const responseRepository = {
-        ...data,
-        tags: [],
-        languages
+    const body = JSON.stringify({ owner, repo })
+    return await axios.post<IRepositoryResponse>(
+      `${ import.meta.env.VITE_API_URL }/repo`,
+      body,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-      setRepoPreview(<IRepository>responseRepository)
+    ).then(async ({ data }) => {
+      const responseRepository: IRepository = {
+        ...data.repo,
+        languages: data.languages,
+        tags: tags ?? []
+      }
+      // setRepoPreview(<IRepository>responseRepository)
       setPreviewState('succeeded')
+      if (data) return responseRepository
+      // else return undefined
     }).catch((err) => {
       console.error(err)
       setPreviewState('failed')
+      return err
     })
   }
 
@@ -64,23 +71,10 @@ export const useRepositories = () => {
 
   const updateCurrentToolboxRepos = useCallback(async () => {
     setToolboxListState('loading')
-    const updatedRepos: IRepository[] = await Promise.all(toolboxRepos.map(async (repo) => {
-      return await octokit.rest.repos.get({
-        owner: repo.owner?.login ?? '',
-        repo: repo.name
-      }).then(async ({ data }) => {
-        const {data: languages} = await octokit.rest.repos.listLanguages({
-          owner: repo.owner?.login ?? '',
-          repo: repo.name
-        })
-        return {
-          ...data,
-          tags: repo.tags,
-          languages
-        }
-      })
+    const updatedRepos = await Promise.all(toolboxRepos.map(async (repo) => {
+      return await getRepository(repo.owner?.login ?? '', repo.name, repo.tags)
     }))
-    const filteredRepos = updatedRepos.filter((repo) => repo)
+    const filteredRepos = updatedRepos.filter((repo) => !!repo)
     setToolboxRepos(filteredRepos)
     setToolboxListState('succeeded')
   }, [setToolboxRepos, toolboxRepos])
