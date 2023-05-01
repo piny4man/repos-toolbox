@@ -17,7 +17,7 @@ const RepoCard: FC<IProps> = ({ repository }) => {
             {repository.owner.login}/<br/>
             <strong>{repository.name}</strong>
           </h2>
-          <img src={repository.owner.avatar_url} alt={repository.owner.login} loading='lazy' />
+          <img src={repository.owner.avatar_url} alt={repository.owner?.login ?? 'Owner'} loading='lazy' />
         </header>
         <footer>
           <section>

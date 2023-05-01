@@ -5,19 +5,17 @@ import styles from './styles.module.scss'
 
 interface IProps {
   status: LoadingState
-  onSearchRepository: (owner: string, repo: string) => void
+  onSearchRepository: (repo: string) => void
   isHidden?: boolean
 }
 
 const SearchHeader: FC<IProps> = ({ status, onSearchRepository, isHidden }) => {
-  const [owner, setOwner] = useState('')
   const [repo, setRepo] = useState('')
-  const isSearchDisabled = useMemo(() => !owner || !repo, [owner, repo])
+  const isSearchDisabled = useMemo(() => !repo, [repo])
 
   const handleSearchRepo = async () => {
     if (isSearchDisabled) return
-    onSearchRepository(owner, repo)
-    setOwner('')
+    onSearchRepository(repo)
     setRepo('')
   }
 
@@ -38,12 +36,6 @@ const SearchHeader: FC<IProps> = ({ status, onSearchRepository, isHidden }) => {
   }
   return (
     <header className={styles.search__container} onKeyDown={handleKeyPress}>
-      <input
-        type="text"
-        placeholder='Owner'
-        value={owner}
-        onChange={event => setOwner(event.target.value)}
-      />
       <input
         type="text"
         placeholder='Repository'

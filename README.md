@@ -8,8 +8,9 @@
 - [x] Update repositories on first load
 - [x] Tags creation and assignation
 - [x] Tag repo filtering
-- [ ] Edit current repo tags
+- [ ] Implement Github search
 - [ ] Add Api and Database
+- [ ] Edit current repo tags
 - [ ] Github app
 - [ ] Change UI
 - [ ] Framer animations
