@@ -13,7 +13,7 @@ export const useRepositories = () => {
 
   const searchRepository = async (q: string) => {
     setPreviewState('loading')
-    return await axios.get<any>(
+    return await axios.get<IRepositoryResponse[]>(
       `${ import.meta.env.VITE_API_URL }/search`,
       {
         params: {
@@ -22,10 +22,9 @@ export const useRepositories = () => {
       }
     ).then(async ({ data }) => {
       setPreviewState('succeeded')
-      const suggestedRepositories: IRepository[] = data.items.map((repo: any) => ({
-        ...repo,
-        subscribers_count: 0,
-        languages: {},
+      const suggestedRepositories: IRepository[] = data.map((repoResponse: IRepositoryResponse) => ({
+        ...repoResponse.repo,
+        languages: repoResponse.languages,
         tags: []
       }) ) ?? []
       setRepoSuggestions(suggestedRepositories)

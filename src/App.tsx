@@ -4,9 +4,9 @@ import { Analytics } from '@vercel/analytics/react'
 import logo from './assets/logo.svg'
 import { RepoCard, SearchFilter, SearchHeader, Select, Spinner, Suggestions } from './components'
 import { useRepositories, useTags } from './hooks'
+import { IOption } from './models'
 import RepoPreview from './components/RepoPreview'
 import styles from './App.module.scss'
-import { IOption } from './models'
 
 const App: FC = () => {
   const {
@@ -45,12 +45,14 @@ const App: FC = () => {
   return (
     <>
       <main className={styles.app}>
-        <div>
-          <img src={logo} className={styles.logo} alt="React logo" />
-        </div>
-        <h1>Repos Toolbox</h1>
-        <h4>🚧 Application still Work in Progress 🏗️</h4>
-        <div className="card">
+        <header className={styles.header}>
+          <div>
+            <img src={logo} className={styles.logo} alt="React logo" />
+          </div>
+          <h1>Repos Toolbox</h1>
+          <h4>🚧 Application still Work in Progress 🏗️</h4>
+        </header>
+        <section className={styles.search__container}>
           <SearchHeader
             status={previewState}
             onSearchRepository={handleSearchRepository}
@@ -62,7 +64,7 @@ const App: FC = () => {
             onSaveRepo={handleSaveRepoToToolbox}
             onCancel={handleCloseRepoPreview}
           />
-        </div>
+        </section>
         <section className={styles.repos__container}>
           <header>
             <h2>My saved repositories</h2>
